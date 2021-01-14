@@ -15,6 +15,7 @@ export const InjectedProps = {
   requiresName: PropTypes.bool,
   requiresCVC: PropTypes.bool,
   requiresPostalCode: PropTypes.bool,
+  requiresBirthdate: PropTypes.bool,
 };
 
 export default function connectToState(CreditCardInput) {
@@ -27,6 +28,7 @@ export default function connectToState(CreditCardInput) {
       requiresCVC: PropTypes.bool,
       requiresPostalCode: PropTypes.bool,
       validatePostalCode: PropTypes.func,
+      requiresBirthdate: PropTypes.bool,
     };
 
     static defaultProps = {
@@ -38,9 +40,10 @@ export default function connectToState(CreditCardInput) {
       requiresPostalCode: false,
       validatePostalCode: (postalCode = "") => {
         return postalCode.match(/^\d{6}$/) ? "valid" :
-               postalCode.length > 6 ? "invalid" :
-               "incomplete";
+        postalCode.length > 6 ? "invalid" :
+        "incomplete";
       },
+      requiresBirthdate: false,
     };
 
     constructor() {
@@ -72,13 +75,14 @@ export default function connectToState(CreditCardInput) {
     };
 
     _displayedFields = () => {
-      const { requiresName, requiresCVC, requiresPostalCode } = this.props;
+      const { requiresName, requiresCVC, requiresPostalCode, requiresBirthdate } = this.props;
       return compact([
         "number",
         "expiry",
         requiresCVC ? "cvc" : null,
         requiresName ? "name" : null,
         requiresPostalCode ? "postalCode" : null,
+        requiresBirthdate ? "birthdate" : null,
       ]);
     };
 

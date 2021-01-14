@@ -29,6 +29,7 @@ export default class CCFieldFormatter {
       cvc: this._formatCVC(values.cvc, card),
       name: removeLeadingSpaces(values.name),
       postalCode: removeNonNumber(values.postalCode),
+      birthdate: this._formatBirthdate(values.birthdate),
     }, this._displayedFields);
   };
 
@@ -50,5 +51,17 @@ export default class CCFieldFormatter {
   _formatCVC = (cvc, card) => {
     const maxCVCLength = card.code.size;
     return limitLength(removeNonNumber(cvc), maxCVCLength);
+  };
+
+  _formatBirthdate = (birthdate) => {
+    const birthdateFormatted = removeNonNumber(birthdate);
+    const lengthSanitized = limitLength(birthdateFormatted, 8);
+
+    if (lengthSanitized.length >= 5)
+      return `${lengthSanitized.slice(0,2)}/${lengthSanitized.slice(2,4)}/${lengthSanitized.slice(4)}`;
+    else if (lengthSanitized.length >= 3)
+      return `${lengthSanitized.slice(0,2)}/${lengthSanitized.slice(2)}`;
+
+    return lengthSanitized;
   };
 }
