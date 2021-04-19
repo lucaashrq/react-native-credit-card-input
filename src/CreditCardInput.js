@@ -64,6 +64,7 @@ export default class CreditCardInput extends Component {
     cardBrandIcons: PropTypes.object,
 
     allowScroll: PropTypes.bool,
+    autoFocus: PropTypes.bool,
     fieldFocus: PropTypes.string,
 
     additionalInputsProps: PropTypes.objectOf(PropTypes.shape(TextInput.propTypes)),
@@ -99,7 +100,7 @@ export default class CreditCardInput extends Component {
     fieldFocus: "number"
   };
 
-  componentDidMount = () => this._focus(this.props.fieldFocus);
+  componentDidMount = () => this.props.autoFocus && this._focus(this.props.fieldFocus);
 
   componentWillReceiveProps = newProps => {
     if (this.props.focused !== newProps.focused) this._focus(newProps.focused);
